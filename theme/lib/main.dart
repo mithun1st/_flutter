@@ -16,22 +16,22 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.black,
         toggleableActiveColor: Colors.green,
         //font theme
-        textTheme: ThemeData.light().textTheme.copyWith(
-              titleSmall: const TextStyle(
-                fontSize: 22,
-                color: Colors.indigo,
-              ),
-              titleLarge: const TextStyle(
-                fontSize: 28,
-                color: Colors.brown,
-              ),
-            ),
+        textTheme: const TextTheme(
+          titleSmall: TextStyle(
+            fontSize: 22,
+            color: Colors.indigo,
+          ),
+          titleLarge: TextStyle(
+            fontSize: 28,
+            color: Colors.brown,
+          ),
+        ),
         //appbar theme
-        appBarTheme: ThemeData.light().appBarTheme.copyWith(
-              foregroundColor: Colors.white,
-              color: Colors.deepPurple,
-              centerTitle: true,
-            ),
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.white,
+          color: Colors.deepPurple,
+          centerTitle: true,
+        ),
         //Icon theme
         iconTheme: const IconThemeData(
           color: Colors.purple,
