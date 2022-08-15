@@ -22,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   final ValueNotifier<int> num = ValueNotifier<int>(0);
+  int count = 10;
   @override
   Widget build(BuildContext context) {
     print('--It call once, when the data is changes also');
