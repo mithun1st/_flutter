@@ -1,4 +1,4 @@
-name: valuelistenablebuilder
+name: block1
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -31,18 +31,14 @@ dependencies:
     sdk: flutter
 
 
-
-
-  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_bloc: ^8.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
