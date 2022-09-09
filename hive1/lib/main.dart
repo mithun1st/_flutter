@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'models/con_file.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-late Box<Contact> box;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -11,6 +10,67 @@ void main() async {
 
   runApp(MyApp());
 }
+
+/*
+//--1
+dependencies:
+  hive: ^[version]
+  hive_flutter: ^[version]
+
+dev_dependencies:
+  hive_generator: ^[version]
+  build_runner: ^[version]
+
+//--2
+part 'con_file.g.dart';
+
+@HiveType(typeId: 0)
+class Contact
+  @HiveField(0)
+  late final String name;
+
+  @HiveField(1)
+  late final String num;
+
+//--3
+>> flutter packages pub run build_runner build
+
+//--4
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(ContactAdapter());
+  await Hive.openBox<Contact>("myBox1");
+
+  runApp(MyApp());
+}
+
+//--4
+  late Box<Contact> box1;
+
+  @override
+  void initState() {
+    box1 = Hive.box('myBox1');
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Hive.box('name').close();
+    Hive.close();
+    super.dispose();
+  }
+
+//--5
+  box1.add(c);
+  print(box1.getAt(i)!.name)
+  print(box1.getAt(i)!.num)
+  box1.put(i, c);
+  box1.deleteAt(i);
+
+*/
 
 class MyApp extends StatelessWidget {
   @override
@@ -40,15 +100,21 @@ class HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
+    //Hive.box('myBox1').close();
     Hive.close();
     super.dispose();
   }
 
-//---------------------------------------------
+//--------------------------------------------- CRUD
   void createContact(Contact c) {
     box1.add(c);
     setState(() {});
   }
+
+  /*
+  read--
+  print(box1.getAt(i)!.name)
+  */
 
   void updateContact(Contact c, int i) {
     box1.put(i, c);

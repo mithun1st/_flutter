@@ -1,9 +1,8 @@
-import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 part 'con_file.g.dart';
 
 @HiveType(typeId: 0)
-class Contact extends ChangeNotifier {
+class Contact {
   @HiveField(0)
   late final String name;
 
