@@ -6,7 +6,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(ContactAdapter());
+
   await Hive.openBox<Contact>("myBox1");
+  await Hive.openBox('myBox2');
 
   runApp(MyApp());
 }
@@ -136,6 +138,27 @@ class HomePageState extends State<HomePage> {
             icon: const Icon(Icons.dangerous),
             onPressed: () {
               box1.clear();
+              setState(() {});
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.get_app),
+            onPressed: () {
+              final Box b = Hive.box('myBox2');
+              b.put('pi', 3.14);
+              b.put(1, 'hi there');
+
+              setState(() {});
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.upload),
+            onPressed: () {
+              final Box b = Hive.box('myBox2');
+              var v = b.toMap();
+              print(v);
+
+              print(b.get('pi'));
               setState(() {});
             },
           )
