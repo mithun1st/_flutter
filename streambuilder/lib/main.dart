@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streambuilder/network.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,15 +31,37 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //print(Network().whereIsISSAtt());
     return Scaffold(
       appBar: AppBar(
         title: Text('StreamBuilder'),
       ),
-      body: StreamBuilder(
-        stream: data(),
-        builder: (context, snapshot) {
-          return Text(snapshot.data.toString());
-        },
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          //------------1
+          StreamBuilder(
+            stream: Network().whereIsISSAtt(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else {
+                return Text(
+                  snapshot.data.toString(),
+                  style: const TextStyle(fontSize: 18),
+                );
+              }
+            },
+          ),
+
+          //-------------2
+          StreamBuilder(
+            stream: data(),
+            builder: (context, snapshot) {
+              return Text(snapshot.data.toString());
+            },
+          ),
+        ],
       ),
     );
   }
