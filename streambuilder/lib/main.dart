@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int counter = 0;
   Stream<int> data() async* {
-    yield* Stream.periodic(Duration(seconds: 1), (int a) {
+    yield Stream.periodic(Duration(seconds: 1), (int a) {
       return counter++;
     });
   }
