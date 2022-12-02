@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigator/getDataFromNewPage.dart';
 import 'package:navigator/newPage.dart';
 import 'package:navigator/constNewPage.dart';
 import 'package:navigator/routePage.dart';
@@ -34,6 +35,11 @@ class MyApp extends StatelessWidget {
         //fetch data from page
         '/InputPage': (_) {
           return InputPage();
+        },
+
+        //get data from furute page by POP
+        '/GetDataFromNewPage': (context) {
+          return GetDataFromNewPage();
         }
       },
     );
@@ -168,6 +174,15 @@ class HomePageState extends State<HomePage> {
             },
             child: const Text('Route Page of NewPage()'),
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed('/GetDataFromNewPage')
+                    .then((value) {
+                  print('-----------/GetDataFromNewPage-------$value');
+                });
+              },
+              child: const Text('Get Data From NewPage by POP')),
           Row(
             children: [
               ElevatedButton(

@@ -6,6 +6,7 @@ import 'package:usb_serial/usb_serial.dart';
 
 class CallerId {
   CallerId() {
+    //constructor
     UsbSerial.usbEventStream!.listen((UsbEvent event) {
       _getPorts();
     });
@@ -21,8 +22,14 @@ class CallerId {
   bool _readyForAtCommand = true;
   String _callStatus = 'x';
 
-  Stream<String> getCallStatus() async* {
-    yield* Stream.periodic(Duration(milliseconds: 100), (int a) {
+  Stream<String> get test async* {
+    yield* Stream.periodic(const Duration(milliseconds: 1000), (int i) {
+      return i.toString();
+    });
+  }
+
+  Stream<String> get getCallStatus async* {
+    yield* Stream.periodic(const Duration(milliseconds: 200), (int a) {
       return _callStatus;
     });
   }

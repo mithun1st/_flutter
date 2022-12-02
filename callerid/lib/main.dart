@@ -52,8 +52,10 @@
 //
 
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:callerid/caller_id.dart';
 import 'package:flutter/material.dart';
 import 'package:usb_serial/transaction.dart';
 import 'package:usb_serial/usb_serial.dart';
@@ -189,6 +191,12 @@ class _MyAppState extends State<MyApp> {
       ),
       body: Center(
           child: Column(children: <Widget>[
+        StreamBuilder(
+          stream: CallerId().test,
+          builder: (context, snapshot) {
+            return Text(snapshot.data.toString());
+          },
+        ),
         Text(
             _ports.length > 0
                 ? "Available Serial Ports"
