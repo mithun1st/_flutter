@@ -3,12 +3,20 @@ part of 'count_bloc.dart';
 @immutable
 abstract class CountEvent {}
 
-class CountIncEvent extends CountEvent {
-  final int c;
-  CountIncEvent(this.c);
+class CountLoadedEvent extends CountEvent {
+  Function fnc;
+  CountLoadedEvent(this.fnc);
 }
 
-class CountDecEvent extends CountEvent {
+class CountAllEvent extends CountEvent {}
+
+class CountIncDecEvent extends CountEvent {
   final int c;
-  CountDecEvent(this.c);
+  CountIncDecEvent(this.c);
+}
+
+class CountSaveEvent extends CountEvent {
+  final int c;
+  final String s;
+  CountSaveEvent(this.c, this.s);
 }

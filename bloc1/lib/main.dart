@@ -32,6 +32,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int count = 0;
+  bool sw1 = false;
+  bool sw2 = true;
+  TextEditingController ctrl = TextEditingController(text: 'Loading...');
+
+  void setTextToTextField(String s) {
+    ctrl.text = s;
+  }
+
+  @override
+  void initState() {
+    BlocProvider.of<CountBloc>(context)
+        .add(CountLoadedEvent(setTextToTextField));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('-----------------------Widget Builder');
@@ -39,73 +54,92 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Bloc'),
+        actions: [
+          IconButton(
+              onPressed: () => BlocProvider.of<CountBloc>(context)
+                  .add(CountLoadedEvent(setTextToTextField)),
+              icon: const Icon(Icons.restart_alt))
+        ],
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  count++;
-                  //---------------------Event 1
-                  BlocProvider.of<CountBloc>(context).add(CountIncEvent(count));
-                },
-                child: Text('++')),
-            ElevatedButton(
-                onPressed: () {
-                  count--;
-                  //---------------------Event 2
-                  BlocProvider.of<CountBloc>(context).add(CountDecEvent(count));
-                },
-                child: Text('--')),
-            //-----------------Bloc Builder (widget)
+            //1st section
             BlocBuilder<CountBloc, CountState>(
               builder: (context, state) {
-                if (state is CountInitial) {
-                  return Text('value: xxx');
-                } else if (state is CountPrintLoadedState) {
+                if (state is CountInitialState) {
                   return const CircularProgressIndicator();
-                } else if (state is CountPrintState) {
-                  return Text('Value: ${state.c}');
+                } else if (state is CountLoadedState) {
+                  count = state.probs[0];
+                  return Text(
+                    count.toString(),
+                    style: const TextStyle(backgroundColor: Colors.yellow),
+                  );
                 } else {
-                  return Text('Error');
+                  return const Icon(Icons.error);
                 }
               },
             ),
-            //-----------------Bloc Listener (snackbar)
-            BlocListener<CountBloc, CountState>(
-              listener: (context, state) {
-                if (state is CountPrintState) {
-                  //----snackbar
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: const Text('waiting'),
-                    duration: const Duration(seconds: 1),
-                  ));
-                  //------snackbar/
-                }
-              },
+            //2nd section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    count--;
+                    BlocProvider.of<CountBloc>(context)
+                        .add(CountIncDecEvent(count));
+                  },
+                  child: const Text('--'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    count++;
+                    BlocProvider.of<CountBloc>(context)
+                        .add(CountIncDecEvent(count));
+                  },
+                  child: const Text('++'),
+                ),
+              ],
             ),
-            //-----------------Bloc Consumer (widget+snackbar)
-            BlocConsumer<CountBloc, CountState>(
-              listener: (context, state) {
-                if (state is CountPrintState) {
-                  //----snackbar
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: const Text('snack'),
-                    duration: const Duration(seconds: 1),
-                    action: SnackBarAction(
-                      label: 'ACTION',
-                      onPressed: () {
-                        count = 0;
+            //3rd section
+            BlocBuilder<CountBloc, CountState>(
+              builder: (context, state) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Switch(
+                      value: sw1,
+                      onChanged: (value) {
+                        sw1 = value;
+                        BlocProvider.of<CountBloc>(context)
+                            .add(CountAllEvent());
                       },
                     ),
-                  ));
-                  //------snackbar/
-                }
-              },
-              builder: (context, state) {
-                return Text('--------');
+                    Switch(
+                      value: sw2,
+                      onChanged: (value) {
+                        sw2 = value;
+                        BlocProvider.of<CountBloc>(context)
+                            .add(CountAllEvent());
+                      },
+                    ),
+                  ],
+                );
               },
             ),
+            //4th section
+            TextField(
+              controller: ctrl,
+            ),
+            //5th section
+            ElevatedButton(
+                onPressed: () {
+                  BlocProvider.of<CountBloc>(context)
+                      .add(CountSaveEvent(count, ctrl.text));
+                },
+                child: Text('Save')),
           ],
         ),
       ),
