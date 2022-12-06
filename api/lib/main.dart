@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:api/remote.dart';
 import 'package:api/models/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 void main() {
   runApp(MyApp());
@@ -61,6 +65,32 @@ class HomePageState extends State {
       elevation: 12,
       child: RecTile(mp, 'User', Colors.yellow, 10),
     );
+  }
+
+  Future<void> imageUploadToServer(XFile? xf) async {
+    if (xf != null) {
+      Uri uri = Uri.parse(
+          'http://a311.yeapps.com/kpos_api/api_file_upload_n/file_upload_menu');
+
+      MultipartRequest mulReq = MultipartRequest('POST', uri);
+
+      //prepair multipart
+      ByteStream stream = ByteStream(File(xf.path).openRead());
+      int len = await File(xf.path).length();
+      MultipartFile mpf = MultipartFile('file', stream, len, filename: xf.name);
+
+      //add filed
+      mulReq.fields['key1'] = 'image1.jpg';
+      mulReq.files.add(mpf);
+
+      StreamedResponse res = await mulReq.send();
+
+      // listen for response
+      res.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+      });
+      print(res.statusCode);
+    }
   }
 
   //-----------------

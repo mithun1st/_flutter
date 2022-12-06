@@ -32,15 +32,23 @@ class _MyHomePageState extends State<MyHomePage> {
   //file variable
   File? imageFile;
 
+  //image size mb/kb
+  double getFileSize(File file) {
+    int sizeInBytes = file.lengthSync();
+    double sizeInKb = sizeInBytes / 1024;
+    return sizeInKb;
+  }
+
   //fnc dec
   void getPic(ImageSource src) async {
     XFile? xf = await ImagePicker().pickImage(source: src);
     imageFile = File(xf!.path);
     print(xf.path);
+    print(xf.name);
+    getFileSize(File(xf.path));
     //
     setState(() {});
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            
             // image view
             imageFile == null
                 ? const Text('NO Photo')
