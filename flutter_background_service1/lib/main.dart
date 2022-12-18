@@ -140,7 +140,7 @@ class _MyAppState extends State<MyApp> {
 
   //-----------------------------button functions
   void foreGroundMode() {
-    service.invoke("setAsBackground");
+    service.invoke("setAsForeground");
   }
 
   void backGroundMode() {
