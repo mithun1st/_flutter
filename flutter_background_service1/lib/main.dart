@@ -136,27 +136,26 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  FlutterBackgroundService service = FlutterBackgroundService();
 
   //-----------------------------button functions
   void foreGroundMode() {
-    service.invoke("setAsForeground");
+    FlutterBackgroundService().invoke("setAsForeground");
   }
 
   void backGroundMode() {
-    service.invoke("setAsBackground");
+    FlutterBackgroundService().invoke("setAsBackground");
   }
 
   void checkService() async {
-    print(await service.isRunning());
+    print(await FlutterBackgroundService().isRunning());
   }
 
   void startService() async {
-    await service.startService();
+    await FlutterBackgroundService().startService();
   }
 
   void stopServide() async {
-    service.invoke("stopService");
+    FlutterBackgroundService().invoke("stopService");
   }
 
   @override
