@@ -5,6 +5,7 @@
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
 // ignore_for_file: camel_case_types
+// coverage:ignore-file
 
 import 'dart:typed_data';
 
@@ -13,31 +14,164 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'models/con_file.dart';
+import 'student_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 2221402669865956973),
-      name: 'Contact',
-      lastPropertyId: const IdUid(3, 9167017677668539722),
+      id: const IdUid(1, 3375816811477324488),
+      name: 'Food',
+      lastPropertyId: const IdUid(4, 3946871988339098962),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 5289599821633710218),
+            id: const IdUid(1, 136049168420497307),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 1922236045333934065),
+            id: const IdUid(2, 8349246685963185061),
+            name: 'foodName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 6881769927416198609),
+            name: 'price',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 3946871988339098962),
+            name: 'isVeg',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(2, 8151145088818815654),
+      name: 'Order1',
+      lastPropertyId: const IdUid(4, 4355400642976851587),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5229094178508965239),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5118405399542538699),
             name: 'name',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 9167017677668539722),
-            name: 'num',
+            id: const IdUid(3, 1997737337785519266),
+            name: 'phone',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4355400642976851587),
+            name: 'favId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(1, 8040013102655083297),
+            relationTarget: 'Food')
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(1, 6739989737297667044),
+            name: 'items',
+            targetId: const IdUid(1, 3375816811477324488))
+      ],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(3, 2221467894133933475),
+      name: 'StudentInfo',
+      lastPropertyId: const IdUid(4, 6410296491291346101),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 999799123058653280),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7214258335305678414),
+            name: 'roll',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1605728805781951670),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6410296491291346101),
+            name: 'address',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(4, 4056181397310809973),
+      name: 'StudentModel',
+      lastPropertyId: const IdUid(5, 1692886549368963238),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 505053498827130167),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 9153125746845937779),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4766854899051018996),
+            name: 'roll',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 2166945018248469844),
+            name: 'isMale',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 1692886549368963238),
+            name: 'subjects',
+            type: 30,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(5, 4293155859793867942),
+      name: 'StudentResult',
+      lastPropertyId: const IdUid(4, 4285331082731598204),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 4352221210633799848),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5652078796635920278),
+            name: 'roll',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5851076530161940807),
+            name: 'dep',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4285331082731598204),
+            name: 'cgp',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -64,9 +198,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 2221402669865956973),
-      lastIndexId: const IdUid(0, 0),
-      lastRelationId: const IdUid(0, 0),
+      lastEntityId: const IdUid(5, 4293155859793867942),
+      lastIndexId: const IdUid(1, 8040013102655083297),
+      lastRelationId: const IdUid(1, 6739989737297667044),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
@@ -77,35 +211,175 @@ ModelDefinition getObjectBoxModel() {
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    Contact: EntityDefinition<Contact>(
+    Food: EntityDefinition<Food>(
         model: _entities[0],
-        toOneRelations: (Contact object) => [],
-        toManyRelations: (Contact object) => {},
-        getId: (Contact object) => object.id,
-        setId: (Contact object, int id) {
+        toOneRelations: (Food object) => [],
+        toManyRelations: (Food object) => {},
+        getId: (Food object) => object.id,
+        setId: (Food object, int id) {
           object.id = id;
         },
-        objectToFB: (Contact object, fb.Builder fbb) {
-          final nameOffset = fbb.writeString(object.name);
-          final numOffset = fbb.writeString(object.num);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.id ?? 0);
-          fbb.addOffset(1, nameOffset);
-          fbb.addOffset(2, numOffset);
+        objectToFB: (Food object, fb.Builder fbb) {
+          final foodNameOffset = fbb.writeString(object.foodName);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, foodNameOffset);
+          fbb.addFloat64(2, object.price);
+          fbb.addBool(3, object.isVeg);
           fbb.finish(fbb.endTable());
-          return object.id ?? 0;
+          return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Contact(
+          final object = Food(
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0),
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    Order1: EntityDefinition<Order1>(
+        model: _entities[1],
+        toOneRelations: (Order1 object) => [object.fav],
+        toManyRelations: (Order1 object) =>
+            {RelInfo<Order1>.toMany(1, object.id): object.items},
+        getId: (Order1 object) => object.id,
+        setId: (Order1 object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Order1 object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final phoneOffset = fbb.writeString(object.phone);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addOffset(2, phoneOffset);
+          fbb.addInt64(3, object.fav.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Order1(
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''))
-            ..id =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          object.fav.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          object.fav.attach(store);
+          InternalToManyAccess.setRelInfo(object.items, store,
+              RelInfo<Order1>.toMany(1, object.id), store.box<Order1>());
+          return object;
+        }),
+    StudentInfo: EntityDefinition<StudentInfo>(
+        model: _entities[2],
+        toOneRelations: (StudentInfo object) => [],
+        toManyRelations: (StudentInfo object) => {},
+        getId: (StudentInfo object) => object.id,
+        setId: (StudentInfo object, int id) {
+          object.id = id;
+        },
+        objectToFB: (StudentInfo object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final addressOffset = fbb.writeString(object.address);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.roll);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, addressOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = StudentInfo(
+              roll: const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
+              name: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              address: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    StudentModel: EntityDefinition<StudentModel>(
+        model: _entities[3],
+        toOneRelations: (StudentModel object) => [],
+        toManyRelations: (StudentModel object) => {},
+        getId: (StudentModel object) => object.id,
+        setId: (StudentModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (StudentModel object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final subjectsOffset = fbb.writeList(
+              object.subjects.map(fbb.writeString).toList(growable: false));
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addInt64(2, object.roll);
+          fbb.addBool(3, object.isMale);
+          fbb.addOffset(4, subjectsOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = StudentModel(
+              name: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              roll: const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
+              subjects: const fb.ListReader<String>(
+                      fb.StringReader(asciiOptimization: true),
+                      lazy: false)
+                  .vTableGet(buffer, rootOffset, 12, []),
+              isMale: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    StudentResult: EntityDefinition<StudentResult>(
+        model: _entities[4],
+        toOneRelations: (StudentResult object) => [],
+        toManyRelations: (StudentResult object) => {},
+        getId: (StudentResult object) => object.id,
+        setId: (StudentResult object, int id) {
+          object.id = id;
+        },
+        objectToFB: (StudentResult object, fb.Builder fbb) {
+          final depOffset = fbb.writeString(object.dep);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.roll);
+          fbb.addOffset(2, depOffset);
+          fbb.addFloat64(3, object.cgp);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = StudentResult(
+              roll: const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
+              dep: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              cgp:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
         })
@@ -114,14 +388,98 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-/// [Contact] entity fields to define ObjectBox queries.
-class Contact_ {
-  /// see [Contact.id]
-  static final id = QueryIntegerProperty<Contact>(_entities[0].properties[0]);
+/// [Food] entity fields to define ObjectBox queries.
+class Food_ {
+  /// see [Food.id]
+  static final id = QueryIntegerProperty<Food>(_entities[0].properties[0]);
 
-  /// see [Contact.name]
-  static final name = QueryStringProperty<Contact>(_entities[0].properties[1]);
+  /// see [Food.foodName]
+  static final foodName = QueryStringProperty<Food>(_entities[0].properties[1]);
 
-  /// see [Contact.num]
-  static final num = QueryStringProperty<Contact>(_entities[0].properties[2]);
+  /// see [Food.price]
+  static final price = QueryDoubleProperty<Food>(_entities[0].properties[2]);
+
+  /// see [Food.isVeg]
+  static final isVeg = QueryBooleanProperty<Food>(_entities[0].properties[3]);
+}
+
+/// [Order1] entity fields to define ObjectBox queries.
+class Order1_ {
+  /// see [Order1.id]
+  static final id = QueryIntegerProperty<Order1>(_entities[1].properties[0]);
+
+  /// see [Order1.name]
+  static final name = QueryStringProperty<Order1>(_entities[1].properties[1]);
+
+  /// see [Order1.phone]
+  static final phone = QueryStringProperty<Order1>(_entities[1].properties[2]);
+
+  /// see [Order1.fav]
+  static final fav =
+      QueryRelationToOne<Order1, Food>(_entities[1].properties[3]);
+
+  /// see [Order1.items]
+  static final items =
+      QueryRelationToMany<Order1, Food>(_entities[1].relations[0]);
+}
+
+/// [StudentInfo] entity fields to define ObjectBox queries.
+class StudentInfo_ {
+  /// see [StudentInfo.id]
+  static final id =
+      QueryIntegerProperty<StudentInfo>(_entities[2].properties[0]);
+
+  /// see [StudentInfo.roll]
+  static final roll =
+      QueryIntegerProperty<StudentInfo>(_entities[2].properties[1]);
+
+  /// see [StudentInfo.name]
+  static final name =
+      QueryStringProperty<StudentInfo>(_entities[2].properties[2]);
+
+  /// see [StudentInfo.address]
+  static final address =
+      QueryStringProperty<StudentInfo>(_entities[2].properties[3]);
+}
+
+/// [StudentModel] entity fields to define ObjectBox queries.
+class StudentModel_ {
+  /// see [StudentModel.id]
+  static final id =
+      QueryIntegerProperty<StudentModel>(_entities[3].properties[0]);
+
+  /// see [StudentModel.name]
+  static final name =
+      QueryStringProperty<StudentModel>(_entities[3].properties[1]);
+
+  /// see [StudentModel.roll]
+  static final roll =
+      QueryIntegerProperty<StudentModel>(_entities[3].properties[2]);
+
+  /// see [StudentModel.isMale]
+  static final isMale =
+      QueryBooleanProperty<StudentModel>(_entities[3].properties[3]);
+
+  /// see [StudentModel.subjects]
+  static final subjects =
+      QueryStringVectorProperty<StudentModel>(_entities[3].properties[4]);
+}
+
+/// [StudentResult] entity fields to define ObjectBox queries.
+class StudentResult_ {
+  /// see [StudentResult.id]
+  static final id =
+      QueryIntegerProperty<StudentResult>(_entities[4].properties[0]);
+
+  /// see [StudentResult.roll]
+  static final roll =
+      QueryIntegerProperty<StudentResult>(_entities[4].properties[1]);
+
+  /// see [StudentResult.dep]
+  static final dep =
+      QueryStringProperty<StudentResult>(_entities[4].properties[2]);
+
+  /// see [StudentResult.cgp]
+  static final cgp =
+      QueryDoubleProperty<StudentResult>(_entities[4].properties[3]);
 }

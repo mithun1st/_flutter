@@ -4,33 +4,168 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:2221402669865956973",
-      "lastPropertyId": "3:9167017677668539722",
-      "name": "Contact",
+      "id": "1:3375816811477324488",
+      "lastPropertyId": "4:3946871988339098962",
+      "name": "Food",
       "properties": [
         {
-          "id": "1:5289599821633710218",
+          "id": "1:136049168420497307",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:1922236045333934065",
+          "id": "2:8349246685963185061",
+          "name": "foodName",
+          "type": 9
+        },
+        {
+          "id": "3:6881769927416198609",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "4:3946871988339098962",
+          "name": "isVeg",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:8151145088818815654",
+      "lastPropertyId": "4:4355400642976851587",
+      "name": "Order1",
+      "properties": [
+        {
+          "id": "1:5229094178508965239",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5118405399542538699",
           "name": "name",
           "type": 9
         },
         {
-          "id": "3:9167017677668539722",
-          "name": "num",
+          "id": "3:1997737337785519266",
+          "name": "phone",
           "type": 9
+        },
+        {
+          "id": "4:4355400642976851587",
+          "name": "favId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8040013102655083297",
+          "relationTarget": "Food"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:6739989737297667044",
+          "name": "items",
+          "targetId": "1:3375816811477324488"
+        }
+      ]
+    },
+    {
+      "id": "3:2221467894133933475",
+      "lastPropertyId": "4:6410296491291346101",
+      "name": "StudentInfo",
+      "properties": [
+        {
+          "id": "1:999799123058653280",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7214258335305678414",
+          "name": "roll",
+          "type": 6
+        },
+        {
+          "id": "3:1605728805781951670",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:6410296491291346101",
+          "name": "address",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:4056181397310809973",
+      "lastPropertyId": "5:1692886549368963238",
+      "name": "StudentModel",
+      "properties": [
+        {
+          "id": "1:505053498827130167",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9153125746845937779",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4766854899051018996",
+          "name": "roll",
+          "type": 6
+        },
+        {
+          "id": "4:2166945018248469844",
+          "name": "isMale",
+          "type": 1
+        },
+        {
+          "id": "5:1692886549368963238",
+          "name": "subjects",
+          "type": 30
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:4293155859793867942",
+      "lastPropertyId": "4:4285331082731598204",
+      "name": "StudentResult",
+      "properties": [
+        {
+          "id": "1:4352221210633799848",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5652078796635920278",
+          "name": "roll",
+          "type": 6
+        },
+        {
+          "id": "3:5851076530161940807",
+          "name": "dep",
+          "type": 9
+        },
+        {
+          "id": "4:4285331082731598204",
+          "name": "cgp",
+          "type": 8
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "1:2221402669865956973",
-  "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastEntityId": "5:4293155859793867942",
+  "lastIndexId": "1:8040013102655083297",
+  "lastRelationId": "1:6739989737297667044",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
