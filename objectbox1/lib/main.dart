@@ -177,7 +177,7 @@ class HomePageState extends State<HomePage> {
                   //  asc> flag:0     des> flag:1
                   Query<StudentModel> query = box1
                       .query(StudentModel_.name.notEquals('test1'))
-                      .order(StudentModel_.roll, flags: 1)
+                      .order(StudentModel_.roll, flags: Order.descending)
                       .build();
                   List<StudentModel> r = query.find();
                   query.close();
@@ -304,7 +304,7 @@ class HomePageState extends State<HomePage> {
                     print('Order Was Empty !');
                     boxOrders.put(orderObj1);
                     boxOrders.put(orderObj2);
-                    boxOrders.putMany([orderObj3,orderObj4]);
+                    boxOrders.putMany([orderObj3, orderObj4]);
                   }
 
                   print('-------------------Order');
@@ -317,11 +317,12 @@ class HomePageState extends State<HomePage> {
                   });
                   print('-------------------/\n');
 
-                  print('-------------------Query1(find order by favfood- apple)');
+                  print(
+                      '-------------------Query1(find order by favfood- apple)');
                   //make query builder
-                  QueryBuilder<Order1> queryBuilder1 =
-                      boxOrders.query();
-                  queryBuilder1.link(Order1_.fav, Food_.foodName.equals('Apple_Chocelet'));
+                  QueryBuilder<Order1> queryBuilder1 = boxOrders.query();
+                  queryBuilder1.link(
+                      Order1_.fav, Food_.foodName.equals('Apple_Chocelet'));
 
                   // to query
                   Query<Order1> query1 = queryBuilder1.build();
@@ -335,11 +336,13 @@ class HomePageState extends State<HomePage> {
                   });
                   query1.close();
 
-                  print('-------------------Query2(find order by fooditems- beef and !mrx)');
+                  print(
+                      '-------------------Query2(find order by fooditems- beef and !mrx)');
                   //make query builder
                   QueryBuilder<Order1> queryBuilder2 =
                       boxOrders.query(Order1_.name.notEquals('MrX'));
-                  queryBuilder2.linkMany(Order1_.items, Food_.foodName.equals('Beef_Kabab'));
+                  queryBuilder2.linkMany(
+                      Order1_.items, Food_.foodName.equals('Beef_Kabab'));
 
                   // to query
                   Query<Order1> query2 = queryBuilder2.build();

@@ -13,7 +13,11 @@ class StudentModel {
   bool isMale;
   List<String> subjects;
 
-  StudentModel({required this.name, required this.roll,required this.subjects, this.isMale = true});
+  StudentModel(
+      {required this.name,
+      required this.roll,
+      required this.subjects,
+      this.isMale = true});
 }
 
 //-----------------for two model query
@@ -41,10 +45,9 @@ class StudentResult {
   StudentResult({required this.roll, required this.dep, this.cgp = 0.0});
 }
 
-//-----------------for relation query
+//-----------------for model in a model query
 @Entity()
 class Food {
-
   @Id()
   int id = 0;
 
@@ -54,7 +57,6 @@ class Food {
 
   Food(this.foodName, this.price, this.isVeg);
 }
-
 
 @Entity()
 class Order1 {
@@ -67,6 +69,8 @@ class Order1 {
   ToOne<Food> fav = ToOne<Food>();
   ToMany<Food> items = ToMany<Food>();
 
-  Order1(this.name, this.phone,);
+  Order1(
+    this.name,
+    this.phone,
+  );
 }
-
