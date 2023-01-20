@@ -74,3 +74,55 @@ class Order1 {
     this.phone,
   );
 }
+
+//----------------------one to many
+
+@Entity()
+class ChildModel {
+  @Id()
+  int id = 0;
+
+  String name;
+  int classLevel;
+  ToOne<TeacherModel> teacher = ToOne<TeacherModel>();
+
+  ChildModel(this.name, this.classLevel);
+}
+
+@Entity()
+class TeacherModel {
+  @Id()
+  int id = 0;
+
+  String teacherName;
+  int teacherAge;
+
+  // @Backlink("teacher")
+  ToMany<ChildModel> childs = ToMany<ChildModel>();
+
+  TeacherModel(this.teacherName, this.teacherAge);
+}
+
+//----------------------------many to many
+@Entity()
+class TaskModel {
+  @Id()
+  int id = 0;
+  String title;
+  bool isDone;
+
+  ToMany<OwnerModel> owners = ToMany<OwnerModel>();
+
+  TaskModel(this.title, this.isDone);
+}
+
+@Entity()
+class OwnerModel {
+  @Id()
+  int id = 0;
+  String name;
+
+  ToMany<TaskModel> tasks = ToMany<TaskModel>();
+
+  OwnerModel(this.name);
+}

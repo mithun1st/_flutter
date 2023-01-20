@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/internal.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:objectbox1/objectbox.dart';
+import 'package:objectbox1/objectbox_class.dart';
 import 'package:objectbox1/objectbox.g.dart';
 import 'package:objectbox1/student_model.dart';
 
@@ -361,6 +361,134 @@ class HomePageState extends State<HomePage> {
                   boxFoods.removeAll();
                 },
                 child: Text('Model In Model')),
+            ElevatedButton(
+                onPressed: () {
+                  late Box<ChildModel> childBox =
+                      ObjectBox.store.box<ChildModel>();
+                  late Box<TeacherModel> teacherBox =
+                      ObjectBox.store.box<TeacherModel>();
+
+                  childBox.removeAll();
+                  teacherBox.removeAll();
+
+                  //create object
+                  if (teacherBox.isEmpty()) {
+                    print('Teacher Was Empty');
+
+                    teacherBox.putMany([
+                      TeacherModel('A', 36),
+                      TeacherModel('B', 27),
+                    ]);
+                  }
+
+                  if (childBox.isEmpty()) {
+                    print('Child Was Empty');
+                    childBox.putMany([
+                      ChildModel('a1', 4),
+                      ChildModel('a2', 6),
+                      ChildModel('a3', 2),
+                      ChildModel('b1', 9),
+                      ChildModel('b2', 6),
+                    ]);
+                  }
+
+                  //assign child
+                  TeacherModel ta = teacherBox.getAll()[0];
+                  ta.childs.addAll([
+                    childBox.getAll()[0],
+                    childBox.getAll()[1],
+                    childBox.getAll()[2],
+                  ]);
+                  teacherBox.put(ta, mode: PutMode.update);
+
+                  TeacherModel tb = teacherBox.getAll()[1];
+                  tb.childs.addAll([
+                    childBox.getAll()[3],
+                    childBox.getAll()[4],
+                  ]);
+                  teacherBox.put(tb, mode: PutMode.update);
+
+                  print('-------------------Child');
+                  childBox.getAll().forEach((element) {
+                    print(
+                        '${element.name} ${element.classLevel} (${element.teacher.target?.teacherName}- ${element.teacher.target?.teacherAge})');
+                  });
+
+                  print('-------------------Teacher');
+                  teacherBox.getAll().forEach((element) {
+                    print('${element.teacherName} ${element.teacherAge}');
+                    element.childs.forEach((e) {
+                      print('\t${e.name} ${e.classLevel}');
+                    });
+                  });
+                },
+                child: Text('One To Many')),
+            ElevatedButton(
+                onPressed: () {
+                  Box<TaskModel> taskBox = ObjectBox.store.box<TaskModel>();
+                  Box<OwnerModel> ownerBox = ObjectBox.store.box<OwnerModel>();
+                  taskBox.removeAll();
+                  ownerBox.removeAll();
+
+                  //create obj
+                  if (ownerBox.isEmpty()) {
+                    print('Owner Was Empty');
+                    ownerBox.putMany([
+                      OwnerModel('A Owner'),
+                      OwnerModel('B Owner'),
+                    ]);
+                  }
+                  if (taskBox.isEmpty()) {
+                    print('Task Was Empty');
+                    taskBox.putMany([
+                      TaskModel('t-a1', true),
+                      TaskModel('t-a2', false),
+                      TaskModel('t-b3', false),
+                      TaskModel('t-b4', false),
+                      TaskModel('t-b5', true),
+                      TaskModel('t-xx', false),
+                    ]);
+                  }
+
+                  //add model
+                  OwnerModel aw = ownerBox.getAll()[0];
+                  aw.tasks.addAll([
+                    taskBox.getAll()[0],
+                    taskBox.getAll()[1],
+                  ]);
+                  ownerBox.put(aw, mode: PutMode.update);
+
+                  OwnerModel bw = ownerBox.getAll()[1];
+                  bw.tasks.addAll([
+                    taskBox.getAll()[2],
+                    taskBox.getAll()[3],
+                    taskBox.getAll()[4],
+                  ]);
+                  ownerBox.put(bw, mode: PutMode.update);
+
+                  TaskModel t = taskBox.getAll()[5];
+                  t.owners.addAll(ownerBox.getAll());
+                  taskBox.put(t, mode: PutMode.update);
+
+                  //print
+                  print('-------------------Task');
+                  taskBox.getAll().forEach((element) {
+                    print(
+                        '${element.title} ${element.isDone} (${element.owners.length})');
+                    element.owners.forEach((e) {
+                      print('\t${e.name}');
+                    });
+                  });
+
+                  print('-------------------Owner');
+                  ownerBox.getAll().forEach((element) {
+                    print('${element.name} (${element.tasks.length})');
+                    element.tasks.forEach((e) {
+                      print('\t${e.title} ${e.isDone}');
+                    });
+                  });
+                },
+                child: Text('Many to Many')),
           ]),
           //-------------------------------------------------- separate column
           Column(children: [
