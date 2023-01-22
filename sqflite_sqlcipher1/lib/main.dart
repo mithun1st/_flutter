@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:sqflite_sqlcipher1/model_class.dart';
 
@@ -35,55 +38,81 @@ class HomePageState extends State {
   String tableName = 'studentTable';
 
   void initDatabase() async {
-    database = await openDatabase('mydatabase.db', password: '12345');
+    String folderName = 'sqldbfile';
+    Directory dir = Directory("/storage/emulated/0/Download/$folderName");
 
-    print(database.isOpen);
+    if (!await dir.exists()) {
+      print('create##############');
+      await dir.create();
+    }
+    print(dir.path);
+
+    database = await openDatabase('${dir.path}/mydb.db', password: '1234',version: 2);
+
     print(database.path);
-    print(await getDatabasesPath());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Sqflite SqlCiphper')),
-      body: Column(
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                initDatabase();
-              },
-              child: Text('init')),
-          ElevatedButton(
-              onPressed: () async {
-                await database.execute(
-                    'CREATE TABLE $tableName (nameColumn TEXT, rollColumn INTEGER, isMaleColumn BOOL, resultColumn DOUBLE)');
-              },
-              child: Text('create table')),
-          ElevatedButton(
-              onPressed: () async {
-                await database.insert(tableName, {
-                  'nameColumn': 'Mithun',
-                  'rollColumn': 23,
-                  'isMaleColumn': true,
-                  'resultColumn': 3.62,
-                });
-              },
-              child: Text('store data')),
-          ElevatedButton(
-              onPressed: () async {
-                var v = await database.rawQuery('SELECT * FROM $tableName');
-                print(v.runtimeType);
-                print(v);
-                // print(v.runtimeType);
-                // print(v);
-              },
-              child: Text('print')),
-          ElevatedButton(
-              onPressed: () async {
-                await database.execute('DROP TABLE $tableName');
-              },
-              child: Text('drop table')),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  initDatabase();
+                },
+                child: Text('init')),
+            ElevatedButton(
+                onPressed: () async {
+                  await database.execute(
+                      'CREATE TABLE $tableName (nameColumn TEXT, rollColumn INTEGER, isMaleColumn BOOL, resultColumn DOUBLE)');
+                },
+                child: Text('create table')),
+            ElevatedButton(
+                onPressed: () async {
+                  await database.insert(tableName, {
+                    'nameColumn': 'Mithun',
+                    'rollColumn': 23,
+                    'isMaleColumn': true,
+                    'resultColumn': 3.62,
+                  });
+                },
+                child: Text('store data')),
+            ElevatedButton(
+                onPressed: () async {
+                  var v = await database.rawQuery('SELECT * FROM $tableName');
+                  print(v.runtimeType);
+                  print(v);
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(v.toString())));
+                  // print(v.runtimeType);
+                  // print(v);
+                },
+                child: Text('print')),
+            ElevatedButton(
+                onPressed: () async {
+                  await database.execute('DROP TABLE $tableName');
+                },
+                child: Text('drop table')),
+            ElevatedButton(
+                onPressed: () async {
+                  print(database.isOpen);
+                  print(database.path);
+                  print(await getDatabasesPath());
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(await getDatabasesPath())));
+                },
+                child: Text('Check')),
+            // ElevatedButton(
+            //     onPressed: () async {
+                  
+            //       print('---------------');
+            //     },
+            //     child: Text('create')),
+          ],
+        ),
       ),
     );
   }
