@@ -1,4 +1,3 @@
-import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:sqflite_sqlcipher1/database/database_helper.dart';
 import 'package:sqflite_sqlcipher1/model_class.dart';
 
@@ -10,7 +9,6 @@ class SqliteService {
     // print(v);
     var v = await SqliteHelper.database
         .insert(SqliteHelper.tableStudent, studentModel.toJson());
-    print('xxxxxxxxxx');
     print(v);
   }
 

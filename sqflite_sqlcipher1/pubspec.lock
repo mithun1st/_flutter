@@ -123,8 +123,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
-<<<<<<< HEAD
-=======
   path_provider:
     dependency: "direct main"
     description:
@@ -174,7 +172,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.3"
->>>>>>> 1b0c46143c53fc1dbb6a907e12d3b6801b78edf0
   permission_handler:
     dependency: "direct main"
     description:
@@ -210,8 +207,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-<<<<<<< HEAD
-=======
   platform:
     dependency: transitive
     description:
@@ -219,7 +214,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
->>>>>>> 1b0c46143c53fc1dbb6a907e12d3b6801b78edf0
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -227,8 +221,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.3"
-<<<<<<< HEAD
-=======
   process:
     dependency: transitive
     description:
@@ -236,7 +228,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
->>>>>>> 1b0c46143c53fc1dbb6a907e12d3b6801b78edf0
   sky_engine:
     dependency: transitive
     description: flutter
@@ -328,8 +319,4 @@ packages:
     version: "0.2.0+3"
 sdks:
   dart: ">=2.17.6 <3.0.0"
-<<<<<<< HEAD
-  flutter: ">=2.8.0"
-=======
   flutter: ">=3.0.0"
->>>>>>> 1b0c46143c53fc1dbb6a907e12d3b6801b78edf0

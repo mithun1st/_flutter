@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
@@ -102,7 +100,7 @@ class HomePageState extends State {
               onPressed: () async {
                 var v = await SqliteHelper.database.rawQuery(
                     'SELECT name FROM sqlite_master WHERE type=\'table\';');
-                print('xxxxxxxxxxxxxtablist');
+
                 print(v);
               },
               child: Text('X-tablist')),
