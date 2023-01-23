@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'package:sqflite_sqlcipher1/database/database_helper.dart';
+import 'package:sqflite_sqlcipher1/database/database_service.dart';
 import 'package:sqflite_sqlcipher1/model_class.dart';
 
 void main() {
@@ -35,11 +39,32 @@ class HomePageState extends State {
   String tableName = 'studentTable';
 
   void initDatabase() async {
-    database = await openDatabase('mydatabase.db', password: '12345');
+    Directory databaseDir =
+        Directory('/storage/emulated/0/Download/sql_db_folder');
 
-    print(database.isOpen);
-    print(database.path);
-    print(await getDatabasesPath());
+    if (!await Permission.storage.status.isGranted) {
+      await Permission.storage.request();
+    }
+    if ((await databaseDir.exists())) {
+    } else {
+      databaseDir.create();
+      print('##FileCreate');
+    }
+    if (await databaseDir.exists()) {
+      database = await openDatabase(
+        '${databaseDir.path}/mydatabase.db',
+        password: '1234',
+        version: 3,
+        onCreate: createTableDb,
+      );
+      print('##${database.path}');
+    }
+  }
+
+  void createTableDb(db, version) async {
+    print('##table');
+    await db.execute(
+        'CREATE TABLE $tableName (nameColumn TEXT, rollColumn INTEGER, isMaleColumn BOOL, resultColumn DOUBLE)');
   }
 
   @override
@@ -50,15 +75,65 @@ class HomePageState extends State {
         children: [
           ElevatedButton(
               onPressed: () {
+                SqliteHelper().createDatabase();
+              },
+              child: Text('X-create')),
+          ElevatedButton(
+              onPressed: () {
+                SqliteHelper().closeDatabase();
+              },
+              child: Text('X-close')),
+          ElevatedButton(
+              onPressed: () {
+                SqliteService().addStudent(stuList[0]);
+              },
+              child: Text('X-add')),
+          ElevatedButton(
+              onPressed: () {
+                SqliteService().getAllStudent();
+              },
+              child: Text('X-get')),
+          ElevatedButton(
+              onPressed: () {
+                print(SqliteHelper.database.isOpen);
+              },
+              child: Text('X-isopen')),
+          ElevatedButton(
+              onPressed: () async {
+                var v = await SqliteHelper.database.rawQuery(
+                    'SELECT name FROM sqlite_master WHERE type=\'table\';');
+                print('xxxxxxxxxxxxxtablist');
+                print(v);
+              },
+              child: Text('X-tablist')),
+          ElevatedButton(
+              onPressed: () {
                 initDatabase();
               },
-              child: Text('init')),
+              child: Text('init database')),
+          ElevatedButton(
+              onPressed: () {
+                database.close();
+              },
+              child: Text('close database')),
           ElevatedButton(
               onPressed: () async {
                 await database.execute(
                     'CREATE TABLE $tableName (nameColumn TEXT, rollColumn INTEGER, isMaleColumn BOOL, resultColumn DOUBLE)');
               },
               child: Text('create table')),
+          ElevatedButton(
+              onPressed: () async {
+                await database.execute('DROP TABLE $tableName');
+              },
+              child: Text('drop table')),
+          ElevatedButton(
+              onPressed: () async {
+                var v = await database.rawQuery(
+                    'SELECT name FROM sqlite_master WHERE type=\'table\';');
+                print(v);
+              },
+              child: Text('show tables')),
           ElevatedButton(
               onPressed: () async {
                 await database.insert(tableName, {
@@ -72,17 +147,13 @@ class HomePageState extends State {
           ElevatedButton(
               onPressed: () async {
                 var v = await database.rawQuery('SELECT * FROM $tableName');
-                print(v.runtimeType);
-                print(v);
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(v.toString())));
                 // print(v.runtimeType);
                 // print(v);
               },
               child: Text('print')),
-          ElevatedButton(
-              onPressed: () async {
-                await database.execute('DROP TABLE $tableName');
-              },
-              child: Text('drop table')),
         ],
       ),
     );

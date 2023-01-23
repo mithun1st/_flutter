@@ -12,19 +12,19 @@ class StudentModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "nameColumn": name,
-      "rollColumn": roll,
-      "isMaleColumn": isMale,
-      "resultColumn": result,
+      "name": name,
+      "roll": roll,
+      "isMale": isMale,
+      "result": result,
     };
   }
 
   factory StudentModel.fromJson(Map<String, dynamic> json) {
     return StudentModel(
-      name: json["nameColumn"],
-      roll: json["rollColumn"],
-      isMale: json["isMaleColumn"],
-      result: json["resultColumn"]?.toDouble(),
+      name: json["name"],
+      roll: json["roll"],
+      isMale: json["isMale"],
+      result: json["result"]?.toDouble(),
     );
   }
 }
