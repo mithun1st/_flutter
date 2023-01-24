@@ -41,27 +41,32 @@ class HomePageState extends State {
             children: [
               ElevatedButton(
                   onPressed: () async {
-                    await SqliteHelper.instance.database;
+                    await SqliteHelper().databaseGet;
                   },
-                  child: Text('create db')),
+                  child: Text('init db')),
+              ElevatedButton(
+                  onPressed: () async {
+                    await SqliteHelper().openSqlDatabase();
+                  },
+                  child: Text('open db')),
               ElevatedButton(
                   onPressed: () {
-                    SqliteHelper.instance.closeDatabase();
+                    SqliteHelper().closeSqlDatabase();
                   },
                   child: Text('close db')),
               ElevatedButton(
                   onPressed: () {
-                    SqliteHelper.instance.checkDatabase();
+                    SqliteHelper().checkDatabase();
                   },
                   child: Text('check db isopen?')),
               ElevatedButton(
                   onPressed: () {
-                    SqliteHelper.instance.showTablesInDatabase();
+                    SqliteHelper().showTablesInDatabase();
                   },
                   child: Text('show tables')),
               ElevatedButton(
                   onPressed: () {
-                    SqliteHelper.instance.dropTableInDatabase();
+                    SqliteHelper().dropTableInDatabase();
                   },
                   child: Text('drop tables')),
             ],

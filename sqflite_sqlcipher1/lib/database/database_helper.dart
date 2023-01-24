@@ -13,22 +13,30 @@ class SqliteHelper {
   static const String studentResult = 'result';
 
   //----------------------- DB Access
-
-  static final SqliteHelper instance = SqliteHelper._init();
-
   static Database? _database;
 
-  SqliteHelper._init();
+  // static final SqliteHelper instance = SqliteHelper._init();
+  // SqliteHelper._init();
 
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-
-    _database = await _initDatabase();
-    return _database!;
+  Future<Database> get databaseGet async {
+    if (_database != null) {
+      return _database!;
+    } else {
+      print('#####Initial Sql');
+      _database = await _initDatabase();
+      return _database!;
+    }
   }
 
-  Future<void> closeDatabase() async {
-    if (_database != null) {
+  Future<void> openSqlDatabase() async {
+    if (!_database!.isOpen) {
+      _database = await _initDatabase();
+    }
+  }
+
+  Future<void> closeSqlDatabase() async {
+    if (_database!.isOpen) {
+      print('#####Close Sql');
       _database!.close();
     }
   }
@@ -37,15 +45,16 @@ class SqliteHelper {
     print(await _database!.isOpen);
   }
 
+  //show table
   Future<void> showTablesInDatabase() async {
     String query = '''SELECT name FROM sqlite_master WHERE type=\'table\'''';
-    print(query.toString());
+    // print(query.toString());
     print(await _database!.rawQuery(query));
   }
 
   Future<void> dropTableInDatabase() async {
     String query = '''DROP TABLE ${SqliteHelper.tableStudent}''';
-    print(query.toString());
+    // print(query.toString());
     print(await _database!.rawQuery(query));
   }
 
@@ -58,6 +67,7 @@ class SqliteHelper {
     await _createFolder(databaseDir);
 
     if (await databaseDir.exists()) {
+      print('#####Create DB / OpenDB');
       db = await openDatabase(
         '${databaseDir.path}/mydatabase.db',
         password: '1234',
@@ -65,7 +75,6 @@ class SqliteHelper {
         onCreate: _createTableWithDatabase,
       );
     }
-    print('##Create DB');
     return db;
   }
 
@@ -77,14 +86,13 @@ class SqliteHelper {
     } else {
       dir.create();
 
-      print('##Create Folder');
+      print('#####Create Folder');
     }
   }
 
   void _createTableWithDatabase(db, version) async {
-    print('##create table');
-    String query =
-        '''CREATE TABLE $tableStudent (
+    print('#####Create Table');
+    String query = '''CREATE TABLE $tableStudent (
           $studentName TEXT,
           $studentRoll INTEGER,
           $studentIsMale BOOL,
