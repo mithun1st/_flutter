@@ -1,7 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:sqflite_sqlcipher1/database/database_helper.dart';
 import 'package:sqflite_sqlcipher1/database/database_service.dart';
 import 'package:sqflite_sqlcipher1/model_class.dart';
@@ -33,125 +30,81 @@ class HomePageState extends State {
     StudentModel(name: 'mr y', roll: 26, isMale: false, result: 3.48),
   ];
 
-  late Database database;
-  String tableName = 'studentTable';
-
-  void initDatabase() async {
-    Directory databaseDir =
-        Directory('/storage/emulated/0/Download/sql_db_folder');
-
-    if (!await Permission.storage.status.isGranted) {
-      await Permission.storage.request();
-    }
-    if ((await databaseDir.exists())) {
-    } else {
-      databaseDir.create();
-      print('##FileCreate');
-    }
-    if (await databaseDir.exists()) {
-      database = await openDatabase(
-        '${databaseDir.path}/mydatabase.db',
-        password: '1234',
-        version: 3,
-        onCreate: createTableDb,
-      );
-      print('##${database.path}');
-    }
-  }
-
-  void createTableDb(db, version) async {
-    print('##table');
-    await db.execute(
-        'CREATE TABLE $tableName (nameColumn TEXT, rollColumn INTEGER, isMaleColumn BOOL, resultColumn DOUBLE)');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Sqflite SqlCiphper')),
-      body: Column(
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ElevatedButton(
-              onPressed: () {
-                SqliteHelper().createDatabase();
-              },
-              child: Text('X-create')),
-          ElevatedButton(
-              onPressed: () {
-                SqliteHelper().closeDatabase();
-              },
-              child: Text('X-close')),
-          ElevatedButton(
-              onPressed: () {
-                SqliteService().addStudent(stuList[0]);
-              },
-              child: Text('X-add')),
-          ElevatedButton(
-              onPressed: () {
-                SqliteService().getAllStudent();
-              },
-              child: Text('X-get')),
-          ElevatedButton(
-              onPressed: () {
-                print(SqliteHelper.database.isOpen);
-              },
-              child: Text('X-isopen')),
-          ElevatedButton(
-              onPressed: () async {
-                var v = await SqliteHelper.database.rawQuery(
-                    'SELECT name FROM sqlite_master WHERE type=\'table\';');
-
-                print(v);
-              },
-              child: Text('X-tablist')),
-          ElevatedButton(
-              onPressed: () {
-                initDatabase();
-              },
-              child: Text('init database')),
-          ElevatedButton(
-              onPressed: () {
-                database.close();
-              },
-              child: Text('close database')),
-          ElevatedButton(
-              onPressed: () async {
-                await database.execute(
-                    'CREATE TABLE $tableName (nameColumn TEXT, rollColumn INTEGER, isMaleColumn BOOL, resultColumn DOUBLE)');
-              },
-              child: Text('create table')),
-          ElevatedButton(
-              onPressed: () async {
-                await database.execute('DROP TABLE $tableName');
-              },
-              child: Text('drop table')),
-          ElevatedButton(
-              onPressed: () async {
-                var v = await database.rawQuery(
-                    'SELECT name FROM sqlite_master WHERE type=\'table\';');
-                print(v);
-              },
-              child: Text('show tables')),
-          ElevatedButton(
-              onPressed: () async {
-                await database.insert(tableName, {
-                  'nameColumn': 'Mithun',
-                  'rollColumn': 23,
-                  'isMaleColumn': true,
-                  'resultColumn': 3.62,
-                });
-              },
-              child: Text('store data')),
-          ElevatedButton(
-              onPressed: () async {
-                var v = await database.rawQuery('SELECT * FROM $tableName');
-                ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(v.toString())));
-                // print(v.runtimeType);
-                // print(v);
-              },
-              child: Text('print')),
+          Column(
+            children: [
+              ElevatedButton(
+                  onPressed: () async {
+                    await SqliteHelper.instance.database;
+                  },
+                  child: Text('create db')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteHelper.instance.closeDatabase();
+                  },
+                  child: Text('close db')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteHelper.instance.checkDatabase();
+                  },
+                  child: Text('check db isopen?')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteHelper.instance.showTablesInDatabase();
+                  },
+                  child: Text('show tables')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteHelper.instance.dropTableInDatabase();
+                  },
+                  child: Text('drop tables')),
+            ],
+          ),
+          Column(
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteService().addStudent(stuList[0]);
+                  },
+                  child: Text('add student 1')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteService().addStudent(stuList[2]);
+                  },
+                  child: Text('add student 2')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteService().getStudent(35);
+                  },
+                  child: Text('get')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteService().getAllStudent();
+                  },
+                  child: Text('get all')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteService().updateStudent(35, stuList[1]);
+                  },
+                  child: Text('update')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteService().deleteStudent(35);
+                  },
+                  child: Text('delete')),
+              ElevatedButton(
+                  onPressed: () {
+                    SqliteService().deleteAllStudent();
+                  },
+                  child: Text('delete all')),
+            ],
+          ),
         ],
       ),
     );

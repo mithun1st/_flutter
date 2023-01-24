@@ -1,20 +1,64 @@
+import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:sqflite_sqlcipher1/database/database_helper.dart';
 import 'package:sqflite_sqlcipher1/model_class.dart';
 
 class SqliteService {
   addStudent(StudentModel studentModel) async {
-    // String query =
-    //     'INSERT INTO ${SqliteHelper.tableStudent} VALUE (\'xx\', 23, 1, 22.22 )';
-    // var v = await SqliteHelper.database.rawInsert(query);
-    // print(v);
-    var v = await SqliteHelper.database
-        .insert(SqliteHelper.tableStudent, studentModel.toJson());
+    Database db = await SqliteHelper.instance.database;
+    String query = '''INSERT INTO ${SqliteHelper.tableStudent} VALUES (
+      '${studentModel.name}', 
+      ${studentModel.roll}, 
+      ${studentModel.isMale}, 
+      ${studentModel.result})''';
+    print(query);
+    var v = await db.rawInsert(query);
     print(v);
   }
 
+  getStudent(int roll) async {
+    Database db = await SqliteHelper.instance.database;
+    String query = '''SELECT * FROM ${SqliteHelper.tableStudent}
+    WHERE ${SqliteHelper.studentRoll}=$roll''';
+    print(query.toString());
+    var v = await db.rawQuery(query);
+    print(v.toString());
+  }
+
   getAllStudent() async {
-    String query = 'SELECT * FROM ${SqliteHelper.tableStudent}';
-    var v = await SqliteHelper.database.rawQuery(query);
-    print(v);
+    Database db = await SqliteHelper.instance.database;
+    String query = '''SELECT * FROM ${SqliteHelper.tableStudent}''';
+    print(query.toString());
+    var v = await db.rawQuery(query);
+    print(v.toString());
+  }
+
+  updateStudent(int roll, StudentModel studentModel) async {
+    Database db = await SqliteHelper.instance.database;
+    String query = '''UPDATE ${SqliteHelper.tableStudent} SET 
+    ${SqliteHelper.studentName} =  '${studentModel.name}',
+    ${SqliteHelper.studentRoll} =  ${studentModel.roll},
+    ${SqliteHelper.studentIsMale} =  ${studentModel.isMale},
+    ${SqliteHelper.studentResult} =  ${studentModel.result}
+    WHERE ${SqliteHelper.studentRoll}=$roll
+    ''';
+    print(query);
+    var v = await db.rawQuery(query);
+    print(v.toString());
+  }
+
+  deleteStudent(int roll) async {
+    Database db = await SqliteHelper.instance.database;
+    String query = '''DELETE FROM ${SqliteHelper.tableStudent}
+    WHERE ${SqliteHelper.studentRoll}=$roll''';
+    print(query.toString());
+    var v = await db.rawQuery(query);
+    print(v.toString());
+  }
+  deleteAllStudent() async {
+    Database db = await SqliteHelper.instance.database;
+    String query = '''DELETE FROM ${SqliteHelper.tableStudent}''';
+    print(query.toString());
+    var v = await db.rawQuery(query);
+    print(v.toString());
   }
 }
