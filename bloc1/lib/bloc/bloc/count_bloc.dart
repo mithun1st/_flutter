@@ -5,7 +5,7 @@ part 'count_event.dart';
 part 'count_state.dart';
 
 class CountBloc extends Bloc<CountEvent, CountState> {
-  CountBloc() : super(CountInitialState()) {
+  CountBloc() : super(CountInitial()) {
     on<CountEvent>((event, emit) {
       emit(CountInitialState());
     });

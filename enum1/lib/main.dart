@@ -14,21 +14,23 @@ class MyApp extends StatelessWidget {
 }
 
 //ENUM example
-enum level {
-  Low,
-  Mid,
-  High,
+enum Level {
+  low(10),
+  mid(20),
+  high(30);
+
+  final int value;
+  const Level(this.value);
 }
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //enum
-    level? l;
-    l = level.Low;
-    print(l == level.Mid);
-    l = level.Mid;
-    print(l == level.Mid);
+    print(Level.high.value);
+    Level level = Level.mid;
+    print(level == Level.high);
+    print(level == Level.mid);
 
     return Scaffold(
       appBar: AppBar(

@@ -1,104 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:theme/bloc/theme_bloc.dart';
+import 'package:theme/home_page.dart';
+import 'package:theme/themes/dark.dart';
+import 'package:theme/themes/light.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ThemeBloc(),
+        )
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //DefineTheme
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-        scaffoldBackgroundColor: Colors.blue.shade100,
-        highlightColor: Colors.blue,
-        splashColor: Colors.black,
-        toggleableActiveColor: Colors.green,
-        //font theme
-        textTheme: const TextTheme(
-          titleSmall: TextStyle(
-            fontSize: 22,
-            color: Colors.indigo,
-          ),
-          titleLarge: TextStyle(
-            fontSize: 28,
-            color: Colors.brown,
-          ),
-        ),
-        //appbar theme
-        appBarTheme: const AppBarTheme(
-          foregroundColor: Colors.white,
-          color: Colors.deepPurple,
-          centerTitle: true,
-        ),
-        //Icon theme
-        iconTheme: const IconThemeData(
-          color: Colors.purple,
-          size: 40,
-        ),
-        //
-      ),
-
-      title: 'Theme Ex',
-      home: MyAppScreen(),
-    );
-  }
-}
-
-class MyAppScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-        title: const Text('Theme'),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.cloud)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.home),
-            Text(
-              'Hello World',
-              //pick the theme value
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            Text(
-              'Example of Theme',
-              //pick the theme value
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Switch(
-                value: true,
-                onChanged: (_) {
-                  //need state less widget
-                }),
-            ElevatedButton(
-              child: Text('Button'),
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                //pick the theme value
-                primary: Theme.of(context).toggleableActiveColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.settings),
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (_) {
-                return Container();
-              });
-        },
-      ),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        bool _isDark = false;
+        state is ThemeChangeState ? _isDark = state.isDark : _isDark = false;
+        return MaterialApp(
+          theme: _isDark ? dark : light,
+          title: 'Theme Ex',
+          home: MyAppScreen(),
+        );
+      },
     );
   }
 }

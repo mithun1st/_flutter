@@ -42,8 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    BlocProvider.of<CountBloc>(context)
-        .add(CountLoadedEvent(setTextToTextField));
+    // BlocProvider.of<CountBloc>(context)
+    //     .add(CountLoadedEvent(setTextToTextField));
     super.initState();
   }
 
@@ -68,17 +68,16 @@ class _MyHomePageState extends State<MyHomePage> {
             //1st section
             BlocBuilder<CountBloc, CountState>(
               builder: (context, state) {
+                int c = 99;
                 if (state is CountInitialState) {
                   return const CircularProgressIndicator();
                 } else if (state is CountLoadedState) {
-                  count = state.probs[0];
-                  return Text(
-                    count.toString(),
-                    style: const TextStyle(backgroundColor: Colors.yellow),
-                  );
-                } else {
-                  return const Icon(Icons.error);
+                  c = state.probs[0];
                 }
+                return Text(
+                  c.toString(),
+                  style: const TextStyle(backgroundColor: Colors.yellow),
+                );
               },
             ),
             //2nd section
